@@ -161,7 +161,10 @@ def extract_and_map_data(string_map, re_map, input_dir, delimiter, suffix, defau
 
     dates = set()
 
-    for filename in glob(os.path.normpath(os.path.join(input_dir, "*" + suffix))):
+    files = glob(os.path.normpath(os.path.join(input_dir, "*" + suffix)))
+    if not files:
+        raise Exception("No suitable files in input folder")
+    for filename in files:
         with open(filename) as f:
             f_reader = csv.reader(f, delimiter=delimiter, quotechar='"')
             for line in f_reader:
